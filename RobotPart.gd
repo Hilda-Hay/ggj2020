@@ -7,6 +7,8 @@ export var speed = 75
 var drag_enabled = false
 var drag_offset = Vector2(0,0)
 
+var coverable = false
+
 func _physics_process(delta):
 	# Get player input
 	var direction: Vector2
@@ -33,11 +35,19 @@ func _physics_process(delta):
 func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
-			drag_enabled = event.pressed
-			drag_offset = position - get_global_mouse_position()
+			if !coverable || get_node("./Area2D").get_overlapping_areas().size() == 0:
+				drag_enabled = event.pressed
+				drag_offset = position - get_global_mouse_position()
 
 func _input(event):
 	if event is InputEventMouseButton:
 		#print("mouse pressed")
 		if event.button_index == BUTTON_LEFT and not event.pressed:
 			drag_enabled = false
+
+func set_coverable(c):
+	coverable = c
+	if(coverable):
+		get_node("./AnimatedSprite").set_frame(1)
+	else:
+		get_node("./AnimatedSprite").set_frame(0)

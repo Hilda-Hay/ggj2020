@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/metal_plate.bmp-a1488a9e56150ed8860f5f1d630cdedc.stex"
+path="res://.import/metal_plate2.png-4526133edf3809a6fb16c36ac8e5ad2d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/metal_plate.bmp"
-dest_files=[ "res://.import/metal_plate.bmp-a1488a9e56150ed8860f5f1d630cdedc.stex" ]
+source_file="res://assets/metal_plate2.png"
+dest_files=[ "res://.import/metal_plate2.png-4526133edf3809a6fb16c36ac8e5ad2d.stex" ]
 
 [params]
 
