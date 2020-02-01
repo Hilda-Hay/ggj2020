@@ -9,6 +9,8 @@ var drag_offset = Vector2(0,0)
 
 var coverable = false
 
+var snap_point = Vector2(100, 100)
+
 func _physics_process(delta):
 	# Get player input
 	var direction: Vector2
@@ -25,7 +27,10 @@ func _physics_process(delta):
 	# If dragging is enabled, use mouse position to calculate movement
 	if drag_enabled:
 		var new_position = get_global_mouse_position()
-		movement = new_position - position + drag_offset;
+		var snap_offset = new_position - snap_point + drag_offset
+		if snap_offset.length() < 20:
+			new_position = snap_point - drag_offset
+		movement = new_position - position + drag_offset
 		#if movement.length() > (speed * delta):
 		#	movement = speed * delta * movement.normalized()
 	
@@ -48,6 +53,9 @@ func _input(event):
 func set_coverable(c):
 	coverable = c
 	if(coverable):
-		get_node("./AnimatedSprite").set_frame(1)
+		get_node("./PartSprite").set_frame(1)
 	else:
-		get_node("./AnimatedSprite").set_frame(0)
+		get_node("./PartSprite").set_frame(0)
+
+func _process(delta):
+	get_node("./SnapPointSprite").position = snap_point - position
