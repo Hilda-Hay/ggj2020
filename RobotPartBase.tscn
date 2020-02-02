@@ -4,10 +4,10 @@
 [ext_resource path="res://assets/metal_plate.png" type="Texture" id=2]
 [ext_resource path="res://assets/snap_point.png" type="Texture" id=4]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
@@ -15,7 +15,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 16, 16 )
 
 [node name="RobotPartBase" type="KinematicBody2D"]
@@ -25,13 +25,13 @@ script = ExtResource( 1 )
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="SnapPointSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 1 )
+frames = SubResource( 2 )
 
 [node name="PartSprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 3 )

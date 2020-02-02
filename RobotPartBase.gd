@@ -45,7 +45,6 @@ func _physics_process(delta):
 func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
-			#if get_node("./Area2D").get_overlapping_areas().size() == 0:
 			if !check_covered():
 				drag_enabled = event.pressed
 				drag_offset = position - get_global_mouse_position()
