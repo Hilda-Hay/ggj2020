@@ -6,6 +6,8 @@ public class partBase : MonoBehaviour {
 	
 	public Vector3 snapPoint;
 
+	private Vector3 snapPointOriginal;
+
 	public List<screwBase> screws;
 
 	public List<GameObject> obscureObjects;
@@ -14,12 +16,36 @@ public class partBase : MonoBehaviour {
 	public bool removeable;
 	public bool obscured;
 
+	public bool rusted = true;
+
+	//parents the class
+	private Transform robotFrame;
+
 	void Start()
 	{
-		snapPoint = transform.position;
+		
+		
 		GetComponentsInChildren<screwBase> (screws);
 		removeable = testRemoveable ();
 		obscured = testObscured ();
+		robotFrame = GameObject.FindWithTag("Player").transform;
+		Debug.Log(robotFrame.gameObject.name);
+		snapPointOriginal = transform.position - robotFrame.position;
+		snapPoint = snapPointOriginal + robotFrame.position;
+	}
+
+	void Update()
+	{
+		snapPoint = snapPointOriginal + robotFrame.position;
+		if(!removed){
+			transform.position = snapPoint;
+		}
+		if(rusted)
+		{
+			GetComponent<SpriteRenderer>().color = new Color(0.8113208f, 0.4368972f, 0.3023318f);
+		} else {
+			GetComponent<SpriteRenderer>().color = Color.white;
+		}
 	}
 
 	public bool testScrewable()

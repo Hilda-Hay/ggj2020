@@ -11,6 +11,8 @@ public class clawScript : MonoBehaviour {
 
 	public Unscrewer us;
 
+	public GameObject PoofObject;
+
 	private Vector3 target = new Vector3(0,7,0);
 	private Vector3 chain0Pos;
 	private Vector3 hookPos;
@@ -66,8 +68,8 @@ public class clawScript : MonoBehaviour {
 	private Vector3 storageSlotFromIndex(int i){
 		//Debug.LogFormat ("i:{0} -> {1}", i, new Vector3 ((i % 4) * (11f / 4f), Mathf.Floor (i / 4) * (11f / 4f), 0f));
 		Vector3 outvec = new Vector3 (
-			(i % 4) * 3 + 2,
-			4 - Mathf.Floor (i / 4) * 3
+			(i % 6) * 3 + 2,
+			6 - Mathf.Floor (i / 6) * 3
 			, 0f);
 		return outvec;
 	}
@@ -82,7 +84,7 @@ public class clawScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (!resting) {
 			if (outOfStorage.Count == 0 && toStorage.Count == 0) {
 				//no items left.
@@ -117,6 +119,9 @@ public class clawScript : MonoBehaviour {
 							if (Vector3.Distance (target, hookPos) < 0.5f) {
 								hookedObj.transform.position = target;
 								storage.Add (toStorage [0]);
+								toStorage[0].rusted = false;
+								//find particleEmitter and poof
+								Object.Instantiate(PoofObject, hookedObj.transform.position,hookedObj.transform.rotation);
 								toStorage.RemoveAt (0);
 								hookedObj = null;
 							}
@@ -156,7 +161,7 @@ public class clawScript : MonoBehaviour {
 				}
 			}
 		} else {
-			target = new Vector3 (0, 4, 0);
+			target = new Vector3 (-1, 4, 0);
 			if (outOfStorage.Count != 0 || toStorage.Count != 0)
 				resting = false;
 		}

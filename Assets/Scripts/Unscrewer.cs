@@ -55,16 +55,9 @@ public class Unscrewer : MonoBehaviour {
 	void moveToTarget (){
 		//goto target y.
 		Vector3 newPos = transform.position;
-		Vector3 offsetPos = transform.position;
-		if (offsetPos.y + speed * Time.deltaTime < target.y) {
-			newPos.y += speed * Time.deltaTime;
-		} else if (offsetPos.y - speed * Time.deltaTime > target.y) {
-			newPos.y -= speed * Time.deltaTime;
-		} else if (offsetPos.x + speed * Time.deltaTime < target.x) {
-			newPos.x += speed * Time.deltaTime;
-		} else if (offsetPos.x - speed * Time.deltaTime > target.x) {
-			newPos.x -= speed * Time.deltaTime;
-		}
+		newPos += (target - newPos).normalized * speed * Time.deltaTime * 
+		Mathf.Clamp((target - newPos).magnitude, 0.0f,1.0f);
+		newPos.z = -3f;
 		//if close to target y, goto target x.
 		transform.position = newPos;
 	}
@@ -72,7 +65,7 @@ public class Unscrewer : MonoBehaviour {
 
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (resting) {
 			target = new Vector3 (-15, 0, 0);
 			if (unscrewList.Count != 0 || screwList.Count != 0)
@@ -87,7 +80,7 @@ public class Unscrewer : MonoBehaviour {
 				} else {
 					target = unscrewList [0].transform.position;
 					target.z = transform.position.z; //clamp z
-					if (Vector3.Distance (target, transform.position) < 0.5f) {
+					if (Vector3.Distance (target, transform.position) < 0.1f) {
 						unscrewList [0].unscrew ();
 						if (invokeDelay) {
 							Invoke ("popUnscrew", 0.25f);
@@ -102,7 +95,7 @@ public class Unscrewer : MonoBehaviour {
 				} else {
 					target = screwList [0].transform.position;
 					target.z = transform.position.z; //clamp z
-					if (Vector3.Distance (target, transform.position) < 0.5f) {
+					if (Vector3.Distance (target, transform.position) < 0.1f) {
 						screwList [0].screw ();
 						if (invokeDelay) {
 							Invoke ("popScrew", 0.25f);
