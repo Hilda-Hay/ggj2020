@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Drill_2.wav-ad977c0d62d437758a17561779001368.sample"
+
+[deps]
+
+source_file="res://Sounds/Drill_2.wav"
+dest_files=[ "res://.import/Drill_2.wav-ad977c0d62d437758a17561779001368.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -8,8 +8,15 @@ var drag_enabled = false
 var drag_offset = Vector2(0,0)
 
 var coverable = false
+var snapped = false
 
 var snap_point = Vector2(100, 100)
+var AudioPlayer = AudioStreamPlayer.new()
+var editObjectMetal = load("res://Sounds/EditObject.wav")
+var editObjectPlastic = load("res://Sounds/PlasticEdit.wav")
+
+func _init():
+	self.add_child(AudioPlayer)
 
 func _physics_process(delta):
 	# Get player input
@@ -28,8 +35,15 @@ func _physics_process(delta):
 	if drag_enabled:
 		var new_position = get_global_mouse_position()
 		var snap_offset = new_position - snap_point + drag_offset
-		if snap_offset.length() < 20:
+		if snap_offset.length() < 20 && !snapped:
+			snapped = true
+			AudioPlayer.stream = editObjectMetal
+			AudioPlayer.play()
+		if snapped:
 			new_position = snap_point - drag_offset
+			if snap_offset.length() > 20:
+				snapped = false
+			
 		movement = new_position - position + drag_offset
 		#if movement.length() > (speed * delta):
 		#	movement = speed * delta * movement.normalized()
@@ -43,6 +57,10 @@ func _input_event(viewport, event, shape_idx):
 			if !coverable || get_node("./Area2D").get_overlapping_areas().size() == 0:
 				drag_enabled = event.pressed
 				drag_offset = position - get_global_mouse_position()
+				if drag_enabled:
+					AudioPlayer.stream = editObjectPlastic
+					AudioPlayer.play()
+				
 
 func _input(event):
 	if event is InputEventMouseButton:

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/EditObject.wav-508125d06e28cbaa0864b356defa7c36.sample"
+
+[deps]
+
+source_file="res://Sounds/EditObject.wav"
+dest_files=[ "res://.import/EditObject.wav-508125d06e28cbaa0864b356defa7c36.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
