@@ -1,0 +1,16 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\screwBase.cs">
+    <Files>
+      <File FileName="Assets\Scripts\partBase.cs" Line="23" Column="59" />
+      <File FileName="Assets\Scripts\screwBase.cs" Line="6" Column="2" />
+      <File FileName="Assets\Scripts\Unscrewer.cs" Line="69" Column="27" />
+      <File FileName="Assets\Scripts\clawScript.cs" Line="126" Column="34" />
+      <File FileName="Assets\Scripts\controllerBehavior.cs" Line="17" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
