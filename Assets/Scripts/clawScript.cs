@@ -21,7 +21,12 @@ public class clawScript : MonoBehaviour {
 
 	private GameObject hookedObj;
 
-	public bool resting = true;
+    private AudioSource powerUpSound;
+    private AudioSource chainSound;
+    private AudioSource clankSound;
+
+
+public bool resting = true;
 
 	public void sendToStorage(partBase a){
 		toStorage.Add (a);
@@ -42,11 +47,27 @@ public class clawScript : MonoBehaviour {
 	//send the claw to go to the position.
 	private void travelTo(){
 		Vector3 newPos = transform.position;
-		if (transform.position.x + speed * Time.deltaTime < target.x) {
-			newPos.x += speed * Time.deltaTime;
-		} else if (transform.position.x - speed * Time.deltaTime > target.x) {
-			newPos.x -= speed * Time.deltaTime;
-		}
+		if (transform.position.x + speed * Time.deltaTime < target.x)
+        {
+            if (!chainSound.isPlaying)
+            {
+                chainSound.Play();
+            }
+            newPos.x += speed * Time.deltaTime;
+		} else if (transform.position.x - speed * Time.deltaTime > target.x)
+        {
+            if (!chainSound.isPlaying)
+            {
+                chainSound.Play();
+            }
+            newPos.x -= speed * Time.deltaTime;
+		} else
+        {
+            if (chainSound.isPlaying)
+            {
+                chainSound.Pause();
+            }
+        }
 		transform.position = newPos;
 	}
 
@@ -79,7 +100,10 @@ public class clawScript : MonoBehaviour {
 		outOfStorage = new List<partBase> ();
 		toStorage = new List<partBase> ();
 		chain0Pos = transform.position;
-	}
+
+        chainSound = GetComponents<AudioSource>()[0];
+        clankSound = GetComponents<AudioSource>()[1];
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -104,6 +128,10 @@ public class clawScript : MonoBehaviour {
 								if (toStorage [0].testRemoveable ()) {
 									Debug.Log ("Removed object, going to storage");
 									hookedObj = toStorage [0].gameObject;
+                                    if(hookedObj.name == "core")
+                                    {
+                                        hookedObj.GetComponents<AudioSource>()[0].Play();
+                                    }
 									toStorage [0].removed = true;
 								}
 							}
@@ -115,6 +143,7 @@ public class clawScript : MonoBehaviour {
 							target.z = hookPos.z;
 							//put thing in storage.
 							if (Vector3.Distance (target, hookPos) < 0.5f) {
+                                clankSound.Play();
 								hookedObj.transform.position = target;
 								storage.Add (toStorage [0]);
 								toStorage.RemoveAt (0);
@@ -132,8 +161,9 @@ public class clawScript : MonoBehaviour {
 							//nothing hooked. find object in storage.
 							target = outOfStorage [0].transform.position;
 							target.z = hookPos.z;
-							if (Vector3.Distance (target, hookPos) < 0.5f) {
-								hookedObj = outOfStorage [0].gameObject;
+							if (Vector3.Distance (target, hookPos) < 0.5f)
+                            {
+                                hookedObj = outOfStorage [0].gameObject;
 								storage.Remove (outOfStorage [0]);
 							}
 						} else {
@@ -143,8 +173,14 @@ public class clawScript : MonoBehaviour {
 							target = outOfStorage [0].snapPoint;
 							target.z = hookPos.z;
 							//put thing in storage.
-							if (Vector3.Distance (target, hookPos) < 0.5f) {
-								hookedObj.transform.position = outOfStorage [0].snapPoint;
+							if (Vector3.Distance (target, hookPos) < 0.5f)
+                            {
+                                if (hookedObj.name == "core")
+                                {
+                                    powerUpSound = hookedObj.GetComponents<AudioSource>()[1];
+                                    Invoke("playPowerUpSound", 3.3f);
+                                }
+                                hookedObj.transform.position = outOfStorage [0].snapPoint;
 								outOfStorage [0].removed = false;
 								hookedObj = null;
 								foreach (screwBase a in outOfStorage[0].screws)
@@ -163,4 +199,9 @@ public class clawScript : MonoBehaviour {
 		updateChain ();
 		travelTo ();
 	}
+
+    private void playPowerUpSound()
+    {
+        powerUpSound.Play();
+    }
 }

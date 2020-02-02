@@ -19,11 +19,14 @@ public class Unscrewer : MonoBehaviour {
 
 	private bool invokeDelay = true;
 
+    private AudioSource screwdriverAudio;
+
 
 	void Start() {
 		resting = false;
 		screwList = new List<screwBase> ();
 		unscrewList = new List<screwBase> ();
+        screwdriverAudio = GetComponent<AudioSource>();
 	}
 
 	public void addScrew(screwBase a){
@@ -90,6 +93,7 @@ public class Unscrewer : MonoBehaviour {
 					if (Vector3.Distance (target, transform.position) < 0.5f) {
 						unscrewList [0].unscrew ();
 						if (invokeDelay) {
+                            screwdriverAudio.Play();
 							Invoke ("popUnscrew", 0.25f);
 							invokeDelay = false;
 						}
@@ -104,8 +108,10 @@ public class Unscrewer : MonoBehaviour {
 					target.z = transform.position.z; //clamp z
 					if (Vector3.Distance (target, transform.position) < 0.5f) {
 						screwList [0].screw ();
-						if (invokeDelay) {
-							Invoke ("popScrew", 0.25f);
+						if (invokeDelay)
+                        {
+                            screwdriverAudio.Play();
+                            Invoke ("popScrew", 0.25f);
 							invokeDelay = false;
 						}
 					}
