@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - Unscrewer
     - clawScript
     - controllerBehavior
+    - killAfterASecond
     - partBase
     - screwBase
     - sliderScript
@@ -31,6 +32,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 92
       Script: {instanceID: 0}
     - Class: 104
@@ -49,11 +54,17 @@ ScriptsOnlyBuild:
       Script: {instanceID: 31770}
     - Class: 114
       Script: {instanceID: 36096}
+    - Class: 114
+      Script: {instanceID: 49172}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
       Script: {instanceID: 0}
     - Class: 157
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
@@ -122,7 +133,7 @@ ScriptsOnlyBuild:
     className: ActivationTrack
   - hash:
       serializedVersion: 2
-      Hash: 2f70f8bc8222085225d2e6150e9088a9
+      Hash: 4a8f6296b7b018211ca801ca0efe9282
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: partBase
@@ -206,7 +217,7 @@ ScriptsOnlyBuild:
     className: PhysicsRaycaster
   - hash:
       serializedVersion: 2
-      Hash: f09bdb8fa2cc5f69e6abd52664bb88c0
+      Hash: b287286ba7869efbaa10edf94a99ed9f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: clawScript
@@ -546,7 +557,13 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Menu_Button_Action
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: killAfterASecond
   platform: 5
   scenePathNames:
   - Assets/Scene.unity
-  playerPath: /Users/Hellspoodles/Documents/CodeProjects/ggj2020/Build/RobotRepaint/GGJ_2020.exe
+  playerPath: /Users/Hellspoodles/Documents/CodeProjects/ggj2020/Build/RoboRepaint/GGJ_2020.exe

@@ -23,6 +23,10 @@ public class clawScript : MonoBehaviour {
 
 	private GameObject hookedObj;
 
+	private AudioSource powerUpSound;
+	private AudioSource chainSound;
+	private AudioSource clankSound;
+
 	public bool resting = true;
 
 	public void sendToStorage(partBase a){
@@ -43,14 +47,30 @@ public class clawScript : MonoBehaviour {
 
 	//send the claw to go to the position.
 	private void travelTo(){
-		Vector3 newPos = transform.position;
-		if (transform.position.x + speed * Time.deltaTime < target.x) {
-			newPos.x += speed * Time.deltaTime;
-		} else if (transform.position.x - speed * Time.deltaTime > target.x) {
-			newPos.x -= speed * Time.deltaTime;
-		}
-		transform.position = newPos;
-	}
+        Vector3 newPos = transform.position;
+        if (transform.position.x + speed * Time.deltaTime < target.x)
+        {
+            if (!chainSound.isPlaying)
+            {
+                chainSound.Play();
+            }
+            newPos.x += speed * Time.deltaTime;
+        } else if (transform.position.x - speed * Time.deltaTime > target.x)
+        {
+            if (!chainSound.isPlaying)
+            {
+                chainSound.Play();
+            }
+            newPos.x -= speed * Time.deltaTime;
+        } else
+        {
+            if (chainSound.isPlaying)
+            {
+                chainSound.Pause();
+            }
+        }
+        transform.position = newPos;
+    }
 
 	private void updateChain (){
 		Vector3 newPos = chain.position;
@@ -81,6 +101,9 @@ public class clawScript : MonoBehaviour {
 		outOfStorage = new List<partBase> ();
 		toStorage = new List<partBase> ();
 		chain0Pos = transform.position;
+
+		chainSound = GetComponents<AudioSource>()[0];
+        clankSound = GetComponents<AudioSource>()[1];
 	}
 	
 	// Update is called once per frame
@@ -106,6 +129,10 @@ public class clawScript : MonoBehaviour {
 								if (toStorage [0].testRemoveable ()) {
 									Debug.Log ("Removed object, going to storage");
 									hookedObj = toStorage [0].gameObject;
+									if(hookedObj.name == "core")
+                                    {
+                                        hookedObj.GetComponents<AudioSource>()[0].Play();
+                                    }
 									toStorage [0].removed = true;
 								}
 							}
@@ -117,6 +144,7 @@ public class clawScript : MonoBehaviour {
 							target.z = hookPos.z;
 							//put thing in storage.
 							if (Vector3.Distance (target, hookPos) < 0.5f) {
+								clankSound.Play();
 								hookedObj.transform.position = target;
 								storage.Add (toStorage [0]);
 								toStorage[0].rusted = false;
@@ -149,6 +177,10 @@ public class clawScript : MonoBehaviour {
 							target.z = hookPos.z;
 							//put thing in storage.
 							if (Vector3.Distance (target, hookPos) < 0.5f) {
+								if(hookedObj.name == "core") {
+									powerUpSound = hookedObj.GetComponents<AudioSource>()[1];
+									Invoke("playPowerUpSound", 3.3f);
+								}
 								hookedObj.transform.position = outOfStorage [0].snapPoint;
 								outOfStorage [0].removed = false;
 								hookedObj = null;
@@ -167,5 +199,9 @@ public class clawScript : MonoBehaviour {
 		}
 		updateChain ();
 		travelTo ();
+	}
+
+	private void playPowerUpSound() {
+		powerUpSound.Play();
 	}
 }
